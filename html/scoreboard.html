@@ -1,0 +1,124 @@
+<!doctype html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+  <style>
+    #timer {
+      text-align: center;
+      overflow: hidden;
+      transition: 1s
+    }
+
+    .mode-presentation .hide-presentation {
+      display: none !important;
+    }
+
+    .mode-editor .hide-editor {
+      display: none !important;
+    }
+
+    .show-editor {
+      display: none !important;
+    }
+
+    .mode-editor .show-editor {
+      display: block !important;
+    }
+  </style>
+  <script src="/jquery/jquery.min.js"></script>
+  <script src="/bootstrap/js/bootstrap.min.js"></script>
+  <script src="index.js"></script>
+</head>
+
+<body>
+  <div class="container pb-6">
+    <div id="timer" class="hide-editor">
+      <div style="overflow:hidden">
+        <div class="timer-html" id="js-timer-html"></div>
+      </div>
+      <div>
+        <button id="js-timer-start" class="btn btn-outline-secondary btn-sm lh-sm">start</button>
+        <button id="js-timer-stop" class="btn btn-outline-secondary btn-sm lh-sm">stop</button>
+        <button id="js-timer-restart" class="btn btn-outline-secondary btn-sm lh-sm">restart</button>
+      </div>
+    </div>
+
+    <div id="table" class="table table-striped mt-3"></div>
+
+    <div class="hide-presentation hide-editor mt-3">
+      <button class="btn btn-primary" onclick="$(body).addClass('mode-presentation')">Presentation Mode</button>
+      <button class="btn btn-success" onclick="$(body).addClass('mode-editor')">Editor Mode</button>
+    </div>
+
+    <div class="show-editor">
+      <div id="error"></div>
+
+      <form submit="return false">
+        <div class="row">
+          <label for="new-submission" class="form-label fw-bold">New Submission <small
+              class="text-body-secondary fw-normal">(Ctrl+Enter to
+              submit)</small></label>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control is-valid font-monospace" id="new-submission" value=""
+              placeholder="#Team #Question Lower Upper" autocomplete="off">
+
+            <button class="btn btn-outline-primary" type="button" id="btn-submission">Submit</button>
+
+            <div id="new-submission-valid" class="valid-feedback font-monospace">
+              Looks good!
+            </div>
+            <div id="new-submission-invalid" class="invalid-feedback font-monospace">
+              Well...
+            </div>
+          </div>
+
+        </div>
+      </form>
+
+      <p class="d-inline-flex gap-1">
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-logs" role="button" aria-expanded="true"
+          aria-controls="collapse-logs">
+          Logs
+        </a>
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-metadata" role="button"
+          aria-expanded="false" aria-controls="collapse-metadata">
+          Settings
+        </a>
+      </p>
+
+      <div class="collapse show" id="collapse-logs">
+        <table class="table table-striped w-auto m-auto">
+          <thead class="text-center">
+            <tr>
+              <th>Time</th>
+              <th>Team</th>
+              <th>Q</th>
+              <th>Lower</th>
+              <th>Upper</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-submissions"></tbody>
+        </table>
+      </div>
+
+      <div class="collapse mt-4 mb-4" id="collapse-metadata">
+        <form id="metadata-form" method="POST" action="metadata" class="row">
+
+          <div class="col-8">
+            <textarea class="form-control font-monospace" id="metadata-textarea" name="value" rows="20"></textarea>
+          </div>
+          <div class="col-4">
+            <button type="submit" class="btn btn-success">Update Metadata</button>
+            <br><br><br><br>
+            <button class="btn btn-danger" id="btn-clear-all">Clear All Submissions</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
