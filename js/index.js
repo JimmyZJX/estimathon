@@ -301,8 +301,7 @@ $(() => {
   }
   refreshMetadata();
 
-  $("#metadata-form").on("submit", e => {
-    e.preventDefault();
+  $("#btn-update-metadata").on("click", e => {
     $.post("metadata", { value: $("#metadata-textarea").val() }).done(_ => {
       refreshMetadata();
     }).fail(e => {

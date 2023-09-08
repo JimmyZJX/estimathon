@@ -56,28 +56,26 @@
     <div class="show-editor">
       <div id="error"></div>
 
-      <form submit="return false">
-        <div class="row">
-          <label for="new-submission" class="form-label fw-bold">New Submission <small
-              class="text-body-secondary fw-normal">(Ctrl+Enter to
-              submit)</small></label>
+      <div class="row">
+        <label for="new-submission" class="form-label fw-bold">New Submission <small
+            class="text-body-secondary fw-normal">(Ctrl+Enter to
+            submit)</small></label>
 
-          <div class="input-group mb-3">
-            <input type="text" class="form-control is-valid font-monospace" id="new-submission" value=""
-              placeholder="#Team #Question Lower Upper" autocomplete="off">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control is-valid font-monospace" id="new-submission" value=""
+            placeholder="#Team #Question Lower Upper" autocomplete="off">
 
-            <button class="btn btn-outline-primary" type="button" id="btn-submission">Submit</button>
+          <button class="btn btn-outline-primary" type="button" id="btn-submission">Submit</button>
 
-            <div id="new-submission-valid" class="valid-feedback font-monospace">
-              Looks good!
-            </div>
-            <div id="new-submission-invalid" class="invalid-feedback font-monospace">
-              Well...
-            </div>
+          <div id="new-submission-valid" class="valid-feedback font-monospace">
+            Looks good!
           </div>
-
+          <div id="new-submission-invalid" class="invalid-feedback font-monospace">
+            Well...
+          </div>
         </div>
-      </form>
+
+      </div>
 
       <p class="d-inline-flex gap-1">
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-logs" role="button" aria-expanded="true"
@@ -107,17 +105,17 @@
       </div>
 
       <div class="collapse mt-4 mb-4" id="collapse-metadata">
-        <form id="metadata-form" method="POST" action="metadata" class="row">
+        <div class="row">
 
           <div class="col-8">
             <textarea class="form-control font-monospace" id="metadata-textarea" name="value" rows="20"></textarea>
           </div>
           <div class="col-4">
-            <button type="submit" class="btn btn-success">Update Metadata</button>
+            <button class="btn btn-success" id="btn-update-metadata">Update Metadata</button>
             <br><br><br><br>
             <button class="btn btn-danger" id="btn-clear-all">Clear All Submissions</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
