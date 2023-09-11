@@ -1,3 +1,8 @@
+
+const svg_1st = '<svg class="medal" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"><circle cx="36" cy="44.9746" r="23"/><g stroke-linecap="round" stroke-linejoin="round"><circle cx="36" cy="44.9746" r="23"/><path d="m29 19v-2.9792"/><path d="m43 19v-2.9792"/><path d="m29 16.0208h14"/><path d="m25.9896 13.0104-9.0221-9.0221"/><path d="m31.9896 12.0104-8.0065-8.0065"/><path d="m34 8 3.9207-3.9831"/><path d="m46 13 8.9988-8.9779"/><path d="m16.9675 3.9883h7.0156"/><path d="m37.9207 4.0169h17.0781"/><path d="m30.3593 37.3924 7.1979-5.3924v26"/></g></g></svg>';
+const svg_2nd = '<svg class="medal" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"><circle cx="36" cy="44.9746" r="23"/><g stroke-linecap="round" stroke-linejoin="round"><circle cx="36" cy="44.9746" r="23"/><path d="m29 19v-2.9792"/><path d="m43 19v-2.9792"/><path d="m29 16.0208h14"/><path d="m25.9896 13.0104-9.0221-9.0221"/><path d="m31.9896 12.0104-8.0065-8.0065"/><path d="m34 8 3.9207-3.9831"/><path d="m46 13 8.9988-8.9779"/><path d="m16.9675 3.9883h7.0156"/><path d="m37.9207 4.0169h17.0781"/><path d="m28.3219 38.3771c.7447-3.6393 3.9646-6.3771 7.8241-6.3771 2.2052 0 4.202.894 5.6472 2.3393 2.2483 2.2483 2.0406 5.9841-.0687 8.3627l-13.565 15.298h15.9729"/></g></g></svg>';
+const svg_3rd = '<svg class="medal" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"><circle cx="36" cy="45.0208" r="23"/><g stroke-linecap="round" stroke-linejoin="round"><circle cx="36" cy="45.0208" r="23"/><path d="m29 19v-2.9792"/><path d="m43 19v-2.9792"/><path d="m29 16.0208h14"/><path d="m25.9896 13.0104-9.0221-9.0221"/><path d="m31.9896 12.0104-8.0065-8.0065"/><path d="m34 8 3.9207-3.9831"/><path d="m46 13 8.9988-8.9779"/><path d="m16.9675 3.9883h7.0156"/><path d="m37.9207 4.0169h17.0781"/><path d="m28.8327 52.81c.6838 2.9621 3.6397 5.19 7.1827 5.19 4.0493 0 7.3316-2.9101 7.3316-6.5s-3.2823-6.5-7.3316-6.5c4.0493 0 7.3316-2.9101 7.3316-6.5s-3.2823-6.5-7.3316-6.5c-3.543 0-6.4989 2.2282-7.1827 5.19"/></g></g></svg>';
+
 function generateBoard(data) {
   let teamNames = data.teams;
   let correctAnswers = data.answers;
@@ -87,7 +92,6 @@ function generateBoard(data) {
         }
       }
     }
-    tds.push(teamScore(teamAnswers));
     return tds;
   }
 
@@ -98,10 +102,25 @@ function generateBoard(data) {
   header.push('Score');
   thead = '<thead class="thead-inverse text-center"><tr>' + header.map(x => { return '<th>' + x + '</th>' }).join('') + '</tr></thead>';
 
+  // rank teams
+  let team_scores = [];
+  for (let team = 0; team < teamNames.length; team++) {
+    team_scores[team] = teamScore(answers[team]);
+  }
+  let team_ranking = team_scores.map(x => team_scores.filter(w => w < x).length + 1);
+
   let trs = [];
   for (let team = 0; team < teamNames.length; team++) {
     let teamAnswers = answers[team];
-    let tds = [`<small class="text-body-secondary fw-normal">${team + 1}</small>&emsp;${teamNames[team]}`].concat(row(teamAnswers)).map(x => { return '<td>' + x + '</td>' });
+    let teamHeader = `<small class="text-body-secondary fw-normal">${team + 1}</small>&emsp;${teamNames[team]}`;
+
+    let svg = "";
+    if (team_ranking[team] == 1) svg = svg_1st;
+    if (team_ranking[team] == 2) svg = svg_2nd;
+    if (team_ranking[team] == 3) svg = svg_3rd;
+    let score_cell = `<span class="numderline">${team_scores[team]}</span>${svg}`;
+
+    let tds = [teamHeader].concat(row(teamAnswers)).concat([score_cell]).map(x => { return '<td>' + x + '</td>' });
     trs.push(tds);
   }
 

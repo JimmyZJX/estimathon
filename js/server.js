@@ -74,6 +74,7 @@ let html = `
 
 app.use(express.static('css'));
 app.use(express.static('js'));
+app.use(express.static('font'));
 
 app.get('/', function (req, res) {
   res.sendFile('scoreboard.html', { root: 'html' });
