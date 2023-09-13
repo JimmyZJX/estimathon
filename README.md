@@ -1,5 +1,7 @@
 # estima-server (Jimmy's fork)
 
+Original project: https://github.com/neojski/estima-server
+
 - `npm install`
 - insert answers into js/index.js
 - assign each team name a number starting from 0
