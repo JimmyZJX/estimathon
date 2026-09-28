@@ -27,7 +27,11 @@ for (const name of Object.keys(nets)) {
   }
 }
 
-const logFile = 'dist/log.json';
+const DATA_DIR = process.env.DATA_DIR || 'dist';
+const PORT = +(process.env.PORT || 3000);
+const HOST = process.env.HOST || '0.0.0.0';
+
+const logFile = path.join(DATA_DIR, 'log.json');
 
 mkdirp.sync(path.dirname(logFile));
 
@@ -134,8 +138,8 @@ app.post('/clearall', function (req, res) {
   res.send('clear all');
 });
 
-app.listen(3000, '0.0.0.0', function () {
-  console.log('Estimathon app running on http://0.0.0.0:3000');
+app.listen(PORT, HOST, function () {
+  console.log('Estimathon app running on http://' + HOST + ':' + PORT);
   console.log('IP addresses:');
   console.log(JSON.stringify(networks, null, 4));
 });
